@@ -1,0 +1,70 @@
+//////////////////////////////////////////////////////////////////////////////
+// Project: Redpants Kernel                                                 //
+// Date:    8-11-2000                                                       //
+// Module:  todolist.txt                                                    //
+// Purpose: This module is not part of the source but a list of the changes //
+//          that need to be made in the kernel as well as a roadmap for the //
+//          major portions of the kernel.                                   //
+//                                                                          //
+//                    Created 2000, by Ben L. Titzer                        //
+//////////////////////////////////////////////////////////////////////////////
+
+ Changes that need to be implemented:
+=======================================
+
+ - Standardize terminal interface
+ - Implement kernel terminal
+ - Restructure vga terminal
+ - Implement kernel timer and clock devices
+ - Restructure keyboard code
+ 
+ - Add multitasking capability
+ - Rework hashtables to use open hashing
+
+ - Add processor cache size detection
+ - Add detection of early Celeron's without on-die L2
+ - Add detection of Pentium II and III Xeons
+ - Fix Tetris random bug
+ - Add Tetris next piece window
+
+
+==============================================================================
+|                                                                            |
+|              Version requirements / Development Schedule                   |
+|                                                                            |
+==============================================================================
+|             I A - 3 2                             I A - 6 4                |
+|----------------------------------------------------------------------------|
+|                                     |                                      |
+| 0.0 - Bootloader                    |                                      |
+|     - Processor detection           |                                      |
+|     - Kernel memory management      |                                      |
+|     - Keyboard support              |                                      |
+|     - Kernel shell                  |                                      |
+|     - Interrupt/Exception handling  |                                      |
+|     - Timer calibration             |                                      |
+|     - Console support               |                                      |
+|     - Date/time support             |                                      |
+|                                     |                                      |
+| 0.1 - Full multitasking             |                                      |
+|     - Virtual memory management     |                                      |
+|     - Process management            |                                      |
+|                                     | 0.1 - Begin porting to x86-64        |
+| 0.2 - Filesystem support            |     - Std. source tree for porting   |
+|     - Hard disk support             |                                      |
+|     - Floppy disk support           |                                      |
+|     - Some SMP support              |                                      |
+|                                     | 0.2 - Synchronize x86-64 port        |
+| 0.3 - External AM/shell             |     - Standardize source tree        |
+|     - Application management        |                                      |
+|     - Driver model                  |                                      |
+|     - full SMP support              |                                      |
+|                                     |                                      |
+| 0.4 - Network support over TCP/IP   |                                      |
+|     - NetBIOS support               |                                      |
+|     - display driver support        |                                      |
+|                                     |                                      |
+| 0.5 - GUI                           |                                      |
+|                                     |                                      |
+==============================================================================
+

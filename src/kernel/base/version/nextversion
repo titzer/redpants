@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if test -f version/bnumber
+    then
+	bnumber=`cat version/bnumber`
+	nbnumber=`expr $bnumber + 1`
+	RPK_BUILDNUM=$major"."$nbnumber
+	echo  $nbnumber > version/bnumber
+#	echo found $bnumber
+    else
+	echo 1 > version/bnumber
+	RPK_BUILDNUM=1
+#	echo not found $bnumber
+    fi
+
+version/curversion

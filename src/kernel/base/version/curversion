@@ -1,0 +1,35 @@
+#!/bin/bash
+
+RPK_RELEASE="Alpha Release"
+
+if test -f ../machine
+    then
+	RPK_TARGETMACHINE=`cat ../machine`
+    else
+	echo -e Version warning: required file \"machine\" does not exist. Creating default.
+	echo Unspecified>../machine
+	RPK_TARGETMACHINE="Unspecified"
+    fi
+
+if test -f version/major
+    then
+	major=`cat version/major`
+    else
+        major="Custom"
+	echo $major > version/major
+    fi
+
+if test -f version/bnumber
+    then
+	bnumber=`cat version/bnumber`
+	RPK_BUILDNUM=$major"."$bnumber
+#	echo found $bnumber
+    else
+	echo 1 > bnumber
+	RPK_BUILDNUM=1
+#	echo not found $bnumber
+    fi
+
+RPK_VERSION=$RPK_RELEASE"  "$RPK_TARGETMACHINE"  <Build "$RPK_BUILDNUM", `date +"%a %b %d, %Y %-I:%M %p" `>"
+echo "$RPK_VERSION"
+exit 0

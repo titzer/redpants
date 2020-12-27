@@ -1,0 +1,86 @@
+<pre>
+<tt>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>// Project: Redpants Kernel                                                 //</font></i>
+<i><font color=#9A1900>// Date:    7-30-2000                                                       //</font></i>
+<i><font color=#9A1900>// Module:  system.c                                                        //</font></i>
+<i><font color=#9A1900>// Purpose: This portion of the kernel contains the major system services   //</font></i>
+<i><font color=#9A1900>//          that are provided to the shell that are less dependant on the   //</font></i>
+<i><font color=#9A1900>//          underlying mechanics of the kernel and more API oriented.       //</font></i>
+<i><font color=#9A1900>//                                                                          //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//                   Copyright 1999-2002, Ben L. Titzer                     //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+
+<b><font color=#000080>#include</font></b> <font color=#FF0000>&lt;base/kernel.h&gt;</font>
+<b><font color=#000080>#include</font></b> <font color=#FF0000>&lt;base/system.h&gt;</font>
+<b><font color=#000080>#include</font></b> <font color=#FF0000>&lt;base/devices/kterm.h&gt;</font>
+<b><font color=#000080>#include</font></b> <font color=#FF0000>&lt;base/devices/keyboard.h&gt;</font>
+<b><font color=#000080>#include</font></b> <font color=#FF0000>&lt;base/util/kprint.h&gt;</font>
+
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//  service a system key (CTRL+ALT combination)                             //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<font color=#009900>void</font> <b><font color=#000000>system_service_key</font></b><font color=#990000>(</font>byte key<font color=#990000>)</font>
+<font color=#FF0000>{</font>
+  <b><font color=#0000FF>switch</font></b> <font color=#990000>(</font> key <font color=#990000>)</font>
+     <font color=#FF0000>{</font>
+     <b><font color=#0000FF>case</font></b> SCAN_DEL<font color=#990000>:</font> <i><font color=#9A1900>// CTRL + ALT + DELETE</font></i>
+        <b><font color=#000000>kterm_print</font></b><font color=#990000>(</font><font color=#FF0000>"\n %kPlease stand by, rebooting the system... "</font><font color=#990000>,</font> TEXT_BRIGHT<font color=#990000>)</font><font color=#990000>;</font>
+	<i><font color=#9A1900>/** delay(500); **/</font></i>
+        <b><font color=#000000>system_reset</font></b><font color=#990000>(</font><font color=#990000>)</font><font color=#990000>;</font>
+        <b><font color=#0000FF>break</font></b><font color=#990000>;</font>
+     <font color=#FF0000>}</font>
+<font color=#FF0000>}</font>
+
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//  service a system event                                                  //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<font color=#009900>void</font> <b><font color=#000000>system_service_event</font></b><font color=#990000>(</font>byte event<font color=#990000>)</font>
+<font color=#FF0000>{</font>
+  <b><font color=#000000>kterm_print</font></b><font color=#990000>(</font><font color=#FF0000>"\n %kUnknown system event encountered: %k0x%X"</font><font color=#990000>,</font>
+	      TEXT_ERROR<font color=#990000>,</font> TEXT_HILIGHT<font color=#990000>,</font> event<font color=#990000>)</font><font color=#990000>;</font>
+
+  <b><font color=#000000>kterm_print</font></b><font color=#990000>(</font><font color=#FF0000>"\n %kSystem event ignored."</font><font color=#990000>,</font> TEXT_NORMAL<font color=#990000>)</font><font color=#990000>;</font>
+<font color=#FF0000>}</font>
+
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//  shutdown kernel                                                         //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+byte <b><font color=#000000>system_shutdown</font></b><font color=#990000>(</font><font color=#009900>void</font><font color=#990000>)</font>
+<font color=#FF0000>{</font>
+  <b><font color=#000000>kterm_print</font></b><font color=#990000>(</font><font color=#FF0000>"Shutting down system..."</font><font color=#990000>,</font> TEXT_DEFAULT<font color=#990000>)</font><font color=#990000>;</font>
+  <i><font color=#9A1900>/**  delay(250); **/</font></i>
+  <b><font color=#000000>kterm_print</font></b><font color=#990000>(</font><font color=#FF0000>"done\n"</font><font color=#990000>,</font> TEXT_HILIGHT<font color=#990000>)</font><font color=#990000>;</font>
+  <b><font color=#0000FF>return</font></b> <b><font color=#0000FF>true</font></b><font color=#990000>;</font>
+<font color=#FF0000>}</font>
+
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//  hang the system                                                         //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<font color=#009900>void</font> <b><font color=#000000>system_hang</font></b><font color=#990000>(</font><font color=#009900>void</font><font color=#990000>)</font>
+<font color=#FF0000>{</font>
+  <i><font color=#9A1900>/**
+  asm("cli;hlt"); // clear interrupts and halt the processor
+  **/</font></i>
+  <b><font color=#000000>cpu_disable_interrupts</font></b><font color=#990000>(</font><font color=#990000>)</font><font color=#990000>;</font>
+  <b><font color=#0000FF>while</font></b> <font color=#990000>(</font> <font color=#993399>1</font> <font color=#990000>)</font> <font color=#990000>;</font>
+<font color=#FF0000>}</font>
+
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+<i><font color=#9A1900>//  reboot system                                                           //</font></i>
+<i><font color=#9A1900>//////////////////////////////////////////////////////////////////////////////</font></i>
+byte <b><font color=#000000>system_reset</font></b><font color=#990000>(</font><font color=#009900>void</font><font color=#990000>)</font>
+<font color=#FF0000>{</font>
+  <i><font color=#9A1900>/**
+   while(inportb(0x64) &amp; 0x02); // try to reboot the computer
+   outportb(0x64, 0xfe);
+   delay(100);                  // some bioses don't immediately reboot
+  **/</font></i>
+
+   <b><font color=#0000FF>return</font></b> <b><font color=#0000FF>false</font></b><font color=#990000>;</font>                <i><font color=#9A1900>// obviously we didn't reboot</font></i>
+<font color=#FF0000>}</font>
+
+
+</tt>
+</pre>

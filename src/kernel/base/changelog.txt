@@ -1,0 +1,123 @@
+//////////////////////////////////////////////////////////////////////////////
+// Project: Redpants Kernel                                                 //
+// Date:    8-04-2000                                                       //
+// Module:  changelog.txt                                                   //
+// Purpose: This module is not part of the source but a log of the changes  //
+//          in the kernel from build to build to aid in feature tracking    //
+//          and bug tracking.                                               //
+//                                                                          //
+//////////////////////////////////////////////////////////////////////////////
+//                   Copyright 1999-2002, Ben L. Titzer                     //
+//////////////////////////////////////////////////////////////////////////////
+
+[Build 310-335] 10-2001 - 1-2002
+- Separated kernel code into machine dependent and independent trees
+- Reworked concepts of terminal, timers, devices
+- Restructured make system
+- Implemented automatic versioning system
+
+[Build 310] 03-26-2001
+- VMM now handles page faults correctly for most types
+- Reworked KMM to use extendable heap
+- Default make options now -O2
+- Slight modifications to SMP detection debugging code
+
+[Builds 300] 02-15 - 03-06-2001
+- Reworked VMM like crazy.
+- Reworked page fault handler like crazy.
+- Added kernel swap daemon module memory/swap.c
+
+[Build 297] 02-09-2001
+- Reworked page fault handler to more efficient debugging scheme
+- Added skeleton page fault handling code
+- Added fast page copy call (assembly)
+- Added "copybench" command to shell
+- Initialization of base kernel task and system stack
+- Enabled interrupts during handling of page faults
+
+[Build 287]
+- Reworked exception stub macros to generate assembly that passes taskstate
+  structure to exception stubs
+- Reworked page fault handler, moved to module memory/vmm.c
+- Added "pftest" command to shell
+- Refined cpu/task.h with new task structure model
+- Added description of upcoming tasking model to cpu/task.h
+- Altered INTERRUPT_STUB() macro to save FS and GS registers
+
+[Build 277] 01-08-2001
+- Fixed cpuid() C call (borrowed from Linux)
+- Changed headerline to cyan background
+
+[Build 275] 01-01-2001
+- Renamed module memory/memmap.c to memory/memory.c
+- Removed old memory map code
+- Implemented 4mb physical memory pool management
+- Changed kmm to use low (system) 4mb pool memory
+- Implemented page table management code
+- Reorganized CPU detection code for more efficient code space
+- Added detection of PSE, PAE, MMX, SSE, and other features 
+
+[Build 259] 12-19-2000
+- Optimized console printing/scrolling code
+- Added benchmarking of printing/scrolling code to shell
+- Fixed minor bug (used bit not reset) in kernel memory manager
+
+[Build 255] 12-06-2000
+-Addition of tetris game built into shell/kernel
+
+[Build 251] 11-30-2000
+- Refined time and date commands in shell
+- Refined heapstatus command in shell
+
+[Build 250] 11-29-2000
+- Added "time" and "date" commands to shell
+- New clockspeed snapping tolerance (1.5mhz if < 270mhz, .55556% otherwise)
+
+[Build 248] 11-27-2000
+- Added debugging of interrupt handler installation
+- Added reporting of processor speed in ghz
+- Added processor detection of Pentium 4 processors
+- Worked on RTC interrupts (still not working)
+
+[Build 242] 11-16-2000
+
+- Reworked DEBUG_XXX macros
+- Added header devices/rtc.h and module devices/rtc.c
+- Added RTC initialization code to read date/time
+
+[Build 235] 8-12-2000
+
+- Added functionality for statusline and headerline macros
+- Fixed build bugs caused by source file encoding
+- Fixed bugs in makefile on some versions of make
+- Added x86-64 architecture macro and string
+- Vendors only compared when CPUID supported in processor detection
+
+[Build 233] 8-04-2000
+
+- Added "heapstatus" command to shell for debugging of KMM
+- Altered hashtable.c to do dynamic memory allocation using KMM
+- Added system.c module and system.h header
+- Moved servicing of system keys to system.c module
+- Added support for upcoming ServiceSystemEvent internal structure
+
+[Build 225] 7-29-2000
+
+- Altered KMM to use hybrid buddy algorithm
+- Added heap initialization using free memory pages between 0-640k
+- Added debugging support in kmm.c for initialization
+- Fixed bugs in memmap.c that caused memory map not to be initialized
+
+[Build 214] 7-24-2000
+
+- Added module memory/kmm.c
+- Implemented ordered-heap based kernel memory allocation
+
+
+
+===========================================================================
+|==                                                                     ==|
+|== Changelog information not available for earlier builds, but changes ==|
+|== can be determined from inspecting source from build to build        ==|
+|==                                                                     ==|
+===========================================================================
